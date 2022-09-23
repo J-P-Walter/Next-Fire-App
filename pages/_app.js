@@ -3,12 +3,16 @@ import "../components/Navbar";
 import Navbar from "../components/Navbar";
 import { Toaster } from "react-hot-toast";
 import { UserContext } from "../lib/context";
+import { useUserData } from "../lib/hooks";
 
-//Puts on every page, nice for navbar
+//Puts on every page
 function MyApp({ Component, pageProps }) {
+  const userData = useUserData();
+  console.log(userData);
+
   return (
     // Allows for user and username to be accessed by all child elements
-    <UserContext.Provider value={{ user: {}, username: {} }}>
+    <UserContext.Provider value={userData}>
       <Navbar />
       <Component {...pageProps} />
       <Toaster />
