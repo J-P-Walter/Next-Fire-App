@@ -8,7 +8,7 @@ import { useUserData } from "../lib/hooks";
 //Puts on every page
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();
-  console.log(userData);
+  //console.log(`From _app ${userData.user}, ${userData.username}`);
 
   return (
     // Allows for user and username to be accessed by all child elements
