@@ -3,7 +3,9 @@
 
 //This was such a headache, the first one does not need {}
 import UserProfile from "../../components/UserProfile";
-import { getUserWithUsername } from "../../lib/firebase";
+import PostFeed from "../../components/PostFeed";
+import { getUserWithUsername, getPosts, postToJSON } from "../../lib/firebase";
+import { collection, query, where, orderBy, limit } from "firebase/firestore";
 
 //Rendering data for user and posts on server
 export async function getServerSideProps({ query }) {
@@ -17,18 +19,21 @@ export async function getServerSideProps({ query }) {
 
   if (userDoc) {
     user = userDoc.data();
+    posts = await getPosts(userDoc);
+    console.log(posts);
   }
 
   return {
-    props: { user }, //passed to page component as props
+    props: { user, posts }, //passed to page component as props
   };
 }
 
-export default function UserProfilePage({ user }) {
+export default function UserProfilePage({ user, posts }) {
   //console.log(user);
   return (
     <main>
       <UserProfile user={user} />
+      <PostFeed posts={posts} />
     </main>
   );
 }
