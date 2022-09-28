@@ -14,6 +14,13 @@ export async function getServerSideProps({ query }) {
   const userDoc = await getUserWithUsername(username);
   //console.log(userDoc);
 
+  //Tells Nextjs to 404
+  if (!userDoc) {
+    return {
+      notFound: true,
+    };
+  }
+
   let user = null;
   let posts = null;
 
