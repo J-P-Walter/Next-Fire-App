@@ -20,7 +20,7 @@ export async function getServerSideProps({ query }) {
   if (userDoc) {
     user = userDoc.data();
     posts = await getPosts(userDoc);
-    console.log(posts);
+    // console.log(posts);
   }
 
   return {
