@@ -5,6 +5,7 @@
 import UserProfile from "../../components/UserProfile";
 import PostFeed from "../../components/PostFeed";
 import { getUserWithUsername, getPosts, postToJSON } from "../../lib/firebase";
+import MetaTags from "../../components/Metatags";
 import { collection, query, where, orderBy, limit } from "firebase/firestore";
 
 //Rendering data for user and posts on server
@@ -39,6 +40,7 @@ export default function UserProfilePage({ user, posts }) {
   //console.log(user);
   return (
     <main>
+      <MetaTags title="User Profile Page" />
       <UserProfile user={user} />
       <PostFeed posts={posts} />
     </main>

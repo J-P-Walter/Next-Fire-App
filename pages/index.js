@@ -1,4 +1,5 @@
 import { db, fromMillis, postToJSON } from "../lib/firebase";
+import MetaTags from "../components/Metatags";
 import { useState } from "react";
 import PostFeed from "../components/PostFeed";
 import Loader from "../components/Loader";
@@ -59,6 +60,7 @@ export default function Home(props) {
 
   return (
     <main>
+      <MetaTags title="home page" />
       <PostFeed posts={posts} />
 
       {!loading && !postsEnd && (
