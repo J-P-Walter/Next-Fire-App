@@ -1,3 +1,109 @@
+import styles from "../../styles/Admin.module.css";
+import AuthCheck from "../../components/AuthCheck";
+import { db, auth } from "../../lib/firebase";
+import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
+// import ImageUploader from '../../components/ImageUploader'
+
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { useForm } from "react-hook-form";
+import ReactMarkdown from "react-markdown";
+import Link from "next/Link";
+import toast from "react-hot-toast";
+
 export default function AdminPostEdit({}) {
-  return <main>Edit Post</main>;
+  return (
+    <AuthCheck>
+      <PostManager />
+    </AuthCheck>
+  );
+}
+
+function PostManager() {
+  console.log("A");
+  const [preview, setPreview] = useState(false);
+  const router = useRouter();
+  const { slug } = router.query;
+
+  const postRef = doc(db, "users", auth.currentUser.uid, "posts", slug);
+  const [post] = useDocumentData(postRef);
+  console.log("B");
+  return (
+    <main className={styles.container}>
+      {post && (
+        <>
+          <section>
+            <h1>{post.title}</h1>
+            <p>ID: {post.slug}</p>
+
+            <PostForm
+              postRef={postRef}
+              defaultValues={post}
+              preview={preview}
+            />
+          </section>
+
+          <aside>
+            <h3>Tools</h3>
+            <button onClick={() => setPreview(!preview)}>
+              {preview ? "Edit" : "Preview"}
+            </button>
+            <Link href={`/${post.username}/${post.slug}`}>
+              <button className="btn-blue">Live view</button>
+            </Link>
+          </aside>
+        </>
+      )}
+    </main>
+  );
+}
+
+function PostForm({ defaultValues, postRef, preview }) {
+  console.log("D");
+  //Connects html form to react
+  const { register, handleSubmit, reset, watch } = useForm({
+    defaultValues,
+    mode: "onChange",
+  });
+  console.log("E");
+  const updatePost = async ({ content, published }) => {
+    console.log("F");
+    await updateDoc(postRef, {
+      content,
+      published,
+      updatedAt: serverTimestamp(),
+    });
+    reset({ content, published });
+    toast.success("Post updated!");
+    console.log("G");
+  };
+
+  return (
+    <form onSubmit={handleSubmit(updatePost)}>
+      {/* Preview mode, renders md */}
+      {preview && (
+        <div className="card">
+          <ReactMarkdown>{watch("content")}</ReactMarkdown>
+        </div>
+      )}
+
+      <div className={preview ? styles.hidden : styles.controls}>
+        <textarea name="content" {...register("content")}></textarea>
+        <fieldset>
+          <input
+            className={styles.checkbox}
+            name="published"
+            type="checkbox"
+            {...register("published")}
+          />
+          <label>Published</label>
+        </fieldset>
+        <button type="submit" className="btn-green">
+          Save Changes
+        </button>
+      </div>
+    </form>
+  );
 }
