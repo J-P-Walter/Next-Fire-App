@@ -9,6 +9,11 @@ import {
 import PostContent from "../../components/PostContent";
 import styles from "../../styles/Post.module.css";
 import { useDocumentData } from "react-firebase-hooks/firestore";
+import HeartButton from "../../components/HeartButton";
+import AuthCheck from "../../components/AuthCheck";
+import Link from "next/Link";
+import { useContext } from "react";
+import { UserContext } from "../../lib/context";
 
 //Dynamic SSG needs get getStaticProps and getStaticPaths
 export async function getStaticProps({ params }) {
@@ -61,6 +66,7 @@ export default function Post(props) {
   const postRef = doc(db, props.path);
   const [realtimePost] = useDocumentData(postRef);
   const post = realtimePost || props.post;
+  const { user: currentUser } = useContext(UserContext);
 
   return (
     <main className={styles.container}>
@@ -72,6 +78,20 @@ export default function Post(props) {
         <p>
           <strong>{post.heartCount || 0} ❤️</strong>
         </p>
+        <AuthCheck
+          fallback={
+            <Link href="/enter">
+              <button>❤️ Sign Up</button>
+            </Link>
+          }
+        >
+          <HeartButton postRef={postRef} />
+        </AuthCheck>
+        {currentUser?.uid === post.uid && (
+          <Link href={`/admin/${post.slug}`}>
+            <button className="btn-blue">Edit Post</button>
+          </Link>
+        )}
       </aside>
     </main>
   );

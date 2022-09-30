@@ -45,7 +45,7 @@ function SignInButton() {
 
 //Sign out of google
 function SignOutButton() {
-  return <button onClick={() => signOut(auth)}>Sign Out</button>;
+  return <button onClick={() => signOut(auth)}>Click here to sign out</button>;
 }
 
 //Choose username if user doesn't have one yet

@@ -14,7 +14,7 @@ import {
 } from "firebase/firestore";
 
 //More server-side rendering
-const LIMIT = 1;
+const LIMIT = 3;
 export async function getServerSideProps(context) {
   const q = query(
     collectionGroup(db, "posts"),
