@@ -33,7 +33,7 @@ export default function ImageUploader() {
       () => {
         // Handle successful uploads on complete
         getDownloadURL(task.snapshot.ref).then((downloadURL) => {
-          console.log(downloadURL);
+          //console.log(downloadURL);
           setdownloadURL(downloadURL);
           setUploading(false);
         });
