@@ -6,7 +6,7 @@ export default function Heart({ postRef }) {
   const heartRef = doc(postRef, "hearts", auth.currentUser.uid);
   //console.log(useDocumentData(heartRef));
   const heartData = useDocumentData(heartRef);
-  console.log(heartData[0]?.exists);
+  //console.log(heartData[0]?.exists);
 
   const removeHeart = async () => {
     const batch = writeBatch(db);
