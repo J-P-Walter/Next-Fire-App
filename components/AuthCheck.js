@@ -1,4 +1,4 @@
-import NextLink from "next/Link";
+import NextLink from "next/link";
 import { useContext } from "react";
 import { UserContext } from "../lib/context";
 

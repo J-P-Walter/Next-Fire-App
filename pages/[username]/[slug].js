@@ -11,7 +11,7 @@ import styles from "../../styles/Post.module.css";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import HeartButton from "../../components/HeartButton";
 import AuthCheck from "../../components/AuthCheck";
-import NextLink from "next/Link";
+import NextLink from "next/link";
 import { useContext } from "react";
 import { UserContext } from "../../lib/context";
 
