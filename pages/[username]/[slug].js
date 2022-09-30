@@ -11,7 +11,7 @@ import styles from "../../styles/Post.module.css";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import HeartButton from "../../components/HeartButton";
 import AuthCheck from "../../components/AuthCheck";
-import Link from "next/Link";
+import NextLink from "next/Link";
 import { useContext } from "react";
 import { UserContext } from "../../lib/context";
 
@@ -80,17 +80,17 @@ export default function Post(props) {
         </p>
         <AuthCheck
           fallback={
-            <Link href="/enter">
+            <NextLink href="/enter">
               <button>❤️ Sign Up</button>
-            </Link>
+            </NextLink>
           }
         >
           <HeartButton postRef={postRef} />
         </AuthCheck>
         {currentUser?.uid === post.uid && (
-          <Link href={`/admin/${post.slug}`}>
+          <NextLink href={`/admin/${post.slug}`}>
             <button className="btn-blue">Edit Post</button>
-          </Link>
+          </NextLink>
         )}
       </aside>
     </main>

@@ -1,4 +1,4 @@
-import Link from "next/Link";
+import NextLink from "next/Link";
 
 export default function PostFeed({ posts, admin }) {
   return posts
@@ -13,18 +13,18 @@ function PostItem({ post, admin = false }) {
   const minutesToRead = (wordCount / 100 + 1).toFixed(0);
   return (
     <div className="card">
-      <Link href={`/${post.username}`}>
+      <NextLink href={`/${post.username}`}>
         <a>
           <strong>By @{post.username}</strong>
         </a>
-      </Link>
-      <Link
+      </NextLink>
+      <NextLink
         href={admin ? `/admin/${post.slug}` : `/${post.username}/${post.slug}`}
       >
         <h2>
           <a>{post.title}</a>
         </h2>
-      </Link>
+      </NextLink>
 
       <footer>
         <span>

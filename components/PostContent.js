@@ -1,4 +1,4 @@
-import Link from "next/Link";
+import NextLink from "next/Link";
 import ReactMarkdown from "react-markdown";
 
 // UI component for when post is focus
@@ -13,9 +13,9 @@ export default function PostContent({ post }) {
       <h1>{post?.title}</h1>
       <span className="text-sm">
         Written by{" "}
-        <Link href={`/${post.username}/`}>
+        <NextLink href={`/${post.username}/`}>
           <a className="text-info">@{post.username}</a>
-        </Link>{" "}
+        </NextLink>{" "}
         on {createdAt.toISOString()}
       </span>
 

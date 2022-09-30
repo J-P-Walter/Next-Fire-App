@@ -1,4 +1,4 @@
-import Link from "next/Link";
+import NextLink from "next/Link";
 import { useContext } from "react";
 import { UserContext } from "../lib/context";
 
@@ -9,5 +9,7 @@ export default function AuthCheck(props) {
   //If signed in, renders the children, if not, renders fallback or link to sign in page
   return username
     ? props.children
-    : props.fallback || <Link href="/enter">You must be signed in</Link>;
+    : props.fallback || (
+        <NextLink href="/enter">You must be signed in</NextLink>
+      );
 }

@@ -1,4 +1,4 @@
-import Link from "next/Link";
+import NextLink from "next/Link";
 
 export default function Custom404() {
   return (
@@ -17,9 +17,9 @@ export default function Custom404() {
         </a>
       </p>
 
-      <Link href="/">
+      <NextLink href="/">
         <button className="btn-blue">Go home</button>
-      </Link>
+      </NextLink>
     </main>
   );
 }

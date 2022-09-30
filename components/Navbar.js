@@ -1,4 +1,4 @@
-import Link from "next/Link";
+import NextLink from "next/Link";
 import { useContext } from "react";
 import { UserContext } from "../lib/context";
 import { auth } from "../lib/firebase";
@@ -11,28 +11,28 @@ export default function Navbar() {
     <nav className="navbar">
       <ul>
         <li>
-          <Link href="/">
+          <NextLink href="/">
             <button className="btn-logo">FEED</button>
-          </Link>
+          </NextLink>
         </li>
 
         {/* User signed in and has username */}
         {username && (
           <>
             <li className="push-left">
-              <Link href="/admin">
+              <NextLink href="/admin">
                 <button className="btn-blue">Write Post</button>
-              </Link>
+              </NextLink>
             </li>
             <li>
-              <Link href="/enter">
+              <NextLink href="/enter">
                 <button>Sign Out</button>
-              </Link>
+              </NextLink>
             </li>
             <li>
-              <Link href={`/${username}`}>
+              <NextLink href={`/${username}`}>
                 <img src={user?.photoURL} />
-              </Link>
+              </NextLink>
             </li>
           </>
         )}
@@ -40,9 +40,9 @@ export default function Navbar() {
         {/* User not signed in or does not have username */}
         {!username && (
           <li>
-            <Link href="/enter">
+            <NextLink href="/enter">
               <button className="btn-blue">Log in</button>
-            </Link>
+            </NextLink>
           </li>
         )}
       </ul>
