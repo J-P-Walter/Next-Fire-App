@@ -61,15 +61,21 @@ function PostManager() {
 }
 
 function PostForm({ defaultValues, postRef, preview }) {
-  console.log("D");
   //Connects html form to react
-  const { register, handleSubmit, reset, watch } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { isValid, isDirty, errors },
+  } = useForm({
     defaultValues,
     mode: "onChange",
   });
-  console.log("E");
+
+  // const { isValid, isDirty } = formState;
+
   const updatePost = async ({ content, published }) => {
-    console.log("F");
     await updateDoc(postRef, {
       content,
       published,
@@ -77,7 +83,6 @@ function PostForm({ defaultValues, postRef, preview }) {
     });
     reset({ content, published });
     toast.success("Post updated!");
-    console.log("G");
   };
 
   return (
@@ -90,7 +95,17 @@ function PostForm({ defaultValues, postRef, preview }) {
       )}
 
       <div className={preview ? styles.hidden : styles.controls}>
-        <textarea name="content" {...register("content")}></textarea>
+        <textarea
+          name="content"
+          {...register("content", {
+            maxLength: { value: 20000, message: "content too long" },
+            minLength: { value: 10, message: "content is too short" },
+            required: { value: true, message: "content is required" },
+          })}
+        ></textarea>
+        {errors.content && (
+          <p className="text-danger">{errors.content.message}</p>
+        )}
         <fieldset>
           <input
             className={styles.checkbox}
@@ -100,7 +115,11 @@ function PostForm({ defaultValues, postRef, preview }) {
           />
           <label>Published</label>
         </fieldset>
-        <button type="submit" className="btn-green">
+        <button
+          type="submit"
+          className="btn-green"
+          disabled={!isDirty || !isValid}
+        >
           Save Changes
         </button>
       </div>
