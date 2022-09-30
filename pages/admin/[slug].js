@@ -2,7 +2,7 @@ import styles from "../../styles/Admin.module.css";
 import AuthCheck from "../../components/AuthCheck";
 import { db, auth } from "../../lib/firebase";
 import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
-// import ImageUploader from '../../components/ImageUploader'
+import ImageUploader from "../../components/ImageUploader.js";
 
 import React, { useState } from "react";
 import { useRouter } from "next/router";
@@ -22,14 +22,13 @@ export default function AdminPostEdit({}) {
 }
 
 function PostManager() {
-  console.log("A");
   const [preview, setPreview] = useState(false);
   const router = useRouter();
   const { slug } = router.query;
 
   const postRef = doc(db, "users", auth.currentUser.uid, "posts", slug);
   const [post] = useDocumentData(postRef);
-  console.log("B");
+
   return (
     <main className={styles.container}>
       {post && (
@@ -73,8 +72,6 @@ function PostForm({ defaultValues, postRef, preview }) {
     mode: "onChange",
   });
 
-  // const { isValid, isDirty } = formState;
-
   const updatePost = async ({ content, published }) => {
     await updateDoc(postRef, {
       content,
@@ -95,6 +92,8 @@ function PostForm({ defaultValues, postRef, preview }) {
       )}
 
       <div className={preview ? styles.hidden : styles.controls}>
+        <ImageUploader />
+
         <textarea
           name="content"
           {...register("content", {
